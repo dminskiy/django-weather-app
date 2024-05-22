@@ -1,0 +1,12 @@
+django
+djangorestframework
+python-dotenv
+requests
+black
+mypy
+pylint
+Faker
+pytest
+pytest-mock
+pytest-factoryboy
+pytest-django
