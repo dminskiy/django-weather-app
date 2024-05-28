@@ -20,7 +20,7 @@ load_dotenv()  # take environment variables from .env.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-DB_DIR = Path(__file__).resolve().parent.parent.parent
+DB_DIR = os.path.join(Path(__file__).resolve().parent.parent.parent, "database")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("DJANGO_KEY")
@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get("DJANGO_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = intstr2bool(os.environ.get("DJANGO_DEBUG", "0"))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost"]
 
 # Application definition
 
@@ -79,7 +79,7 @@ WSGI_APPLICATION = "weather_app.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": DB_DIR / "db.sqlite3",
+        "NAME": os.path.join(DB_DIR, "db.sqlite3"),
     }
 }
 
