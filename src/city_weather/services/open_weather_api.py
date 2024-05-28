@@ -13,12 +13,23 @@ class CityInfo:
     lat: float
     city_raw: Optional[dict]
     country_code: Optional[str] = None
+    state: Optional[str] = None
+    label: Optional[str] = None
+
+    def __post_init__(self):
+        self.label = f"{self.city_name}"
+        if self.state:
+            self.label += f", {self.state}"
+        if self.country_code:
+            self.label += f", {self.country_code}"
 
 
 @dataclass
 class WeatherInfo:
     current_temperature_kelvin: float
     current_condition: str
+    humidity: int
+    wind_speed: float
     weather_raw: dict
 
 
@@ -27,8 +38,8 @@ class OpenWeatherAPI:
         self.appid = os.environ.get("OPEN_WEATHER_API_KEY")
         assert self.appid, "OpenWeather API key was not provided"
 
-    def get_weather(self, city_info: CityInfo) -> WeatherInfo:
-        url = f"https://api.openweathermap.org/data/2.5/weather?lat={city_info.lat}&lon={city_info.lon}&appid={self.appid}"
+    def get_weather(self, lat: float, lon: float) -> WeatherInfo:
+        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={self.appid}"
 
         response = requests.get(url)
 
@@ -42,6 +53,8 @@ class OpenWeatherAPI:
         return WeatherInfo(
             current_temperature_kelvin=data["main"]["temp"],
             current_condition=data["weather"][0]["main"],
+            humidity=data["main"]["humidity"],
+            wind_speed=data["wind"]["speed"],
             weather_raw=data,
         )
 
@@ -69,6 +82,7 @@ class OpenWeatherAPI:
                 lon=item["lon"],
                 lat=item["lat"],
                 country_code=item["country"],
+                state=item.get("state", None),
                 city_raw=item,
             )
             for item in data
