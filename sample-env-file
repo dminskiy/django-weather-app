@@ -1,0 +1,5 @@
+DJANGO_KEY="my-secret-django-key"
+DJANGO_DEBUG=0
+DATABASE_DIR="directory-where-db.sqlite3-will-be-created"
+
+OPEN_WEATHER_API_KEY = "api-key"
