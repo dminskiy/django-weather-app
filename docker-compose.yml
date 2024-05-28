@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+  django:
+    container_name: weather_app
+    image: weather_app_img:0.0.1
+    platform: linux/amd64
+    build:
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+       - ./src:/wdir/src
+       - ${DATABASE_DIR}:/wdir/database
