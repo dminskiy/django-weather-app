@@ -9,8 +9,6 @@ from city_weather.models import City, CityWeather
 from city_weather.services.open_weather_api import OpenWeatherAPI
 from city_weather.serializers import CityWeatherSerializer
 
-from utils.utils import unpack_request_data
-
 openWeatherApi = OpenWeatherAPI()
 
 
