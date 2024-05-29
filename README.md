@@ -70,6 +70,8 @@ There is a total of 9 tests as described below:
    - Currently, location coordinates & autocomplete names are fetched from geo-coding but the final location names used on cards are extracted from the weather API and are obtained via the cords.
    - This often results in slight discrepancies between "what was added" and "what is shown on the card"
    - Solutions: (i) reuse geo-coding names or (ii) have a consistent coord-location mapping
+- Backend: standard handler to a response
+- Backend: standardised error management
 - Add CI/CD
 
 ## Additional Functionality
