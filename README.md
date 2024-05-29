@@ -51,7 +51,16 @@ Manage the raw backend using an admin account (needs to be set on the server fro
     - Django HTML templates
     - Ajax
     - jQuery
-    - Bootstrap 
+    - Bootstrap
+
+## Testing
+To run the test, within the container navigate to the `/src` directory and run `python manage.py test`
+
+There is a total of 9 tests as described below:
+- Open Weather API - test the API connection and API handling fundtionality, namely OpenWeatherAPI class & data containers
+- Backend endpoint testing - test IO for backend endpoints
+- Frontend template selection - test that a correct template is executed
+- Database management - test that objects are created in and removed from the database as expected
 
 # Future Work
 
