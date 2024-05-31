@@ -51,7 +51,16 @@ Manage the raw backend using an admin account (needs to be set on the server fro
     - Django HTML templates
     - Ajax
     - jQuery
-    - Bootstrap 
+    - Bootstrap
+
+## Testing
+To run the test, within the container navigate to the `/src` directory and run `python manage.py test`
+
+There is a total of 9 tests as described below:
+- Open Weather API - test the API connection and API handling fundtionality, namely OpenWeatherAPI class & data containers
+- Backend endpoint testing - test IO for backend endpoints
+- Frontend template selection - test that a correct template is executed
+- Database management - test that objects are created in and removed from the database as expected
 
 # Future Work
 
@@ -61,6 +70,8 @@ Manage the raw backend using an admin account (needs to be set on the server fro
    - Currently, location coordinates & autocomplete names are fetched from geo-coding but the final location names used on cards are extracted from the weather API and are obtained via the cords.
    - This often results in slight discrepancies between "what was added" and "what is shown on the card"
    - Solutions: (i) reuse geo-coding names or (ii) have a consistent coord-location mapping
+- Backend: standard handler to a response
+- Backend: standardised error management
 - Add CI/CD
 
 ## Additional Functionality
