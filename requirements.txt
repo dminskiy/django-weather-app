@@ -16,6 +16,8 @@ charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via black
+coverage[toml]==7.5.3
+    # via pytest-cov
 dill==0.3.8
     # via pylint
 django==5.0.6
@@ -66,9 +68,12 @@ pylint==3.2.2
 pytest==8.2.1
     # via
     #   -r requirements.in
+    #   pytest-cov
     #   pytest-django
     #   pytest-factoryboy
     #   pytest-mock
+pytest-cov==5.0.0
+    # via -r requirements.in
 pytest-django==4.8.0
     # via -r requirements.in
 pytest-factoryboy==2.7.0
@@ -88,6 +93,7 @@ sqlparse==0.5.0
 tomli==2.0.1
     # via
     #   black
+    #   coverage
     #   mypy
     #   pylint
     #   pytest

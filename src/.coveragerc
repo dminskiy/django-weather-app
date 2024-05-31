@@ -1,0 +1,2 @@
+[run]
+omit = */tests/*,*/weather_app/*,manage.py,startup.py,*/__init__.py,*/migrations/*
