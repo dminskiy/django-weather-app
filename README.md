@@ -54,7 +54,11 @@ Manage the raw backend using an admin account (needs to be set on the server fro
     - Bootstrap
 
 ## Testing
-To run the test, within the container navigate to the `/src` directory and run `python manage.py test`
+For tests with coverage details from the working directory of the container (`/wdir`) run:
+* `pytest --cov --cov-config /wdir/src/.coveragerc src`
+
+### Coverage report
+![alt text](readme_images/coverage.png)
 
 There is a total of 9 tests as described below:
 - Open Weather API - test the API connection and API handling fundtionality, namely OpenWeatherAPI class & data containers
