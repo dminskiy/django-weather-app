@@ -8,6 +8,7 @@ class City(models.Model):
     lat = models.FloatField(null=False, editable=False)
     city_name = models.TextField(null=False, editable=False)
     country_code = models.TextField(null=True, editable=False)
+    state = models.TextField(null=True, editable=False)
 
     created_at = models.DateTimeField(null=True)
 
