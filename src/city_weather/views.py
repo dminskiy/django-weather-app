@@ -1,3 +1,5 @@
+import json
+
 from rest_framework.views import APIView
 from django.http import JsonResponse
 
@@ -36,16 +38,22 @@ class CityWeatherView(APIView):
         Get weather: adds a city or updates one if it already exists
         """
         request_dict = request.data
-        lat = request_dict.get("lat")
-        lon = request_dict.get("lon")
+        city_data = request_dict.get("city_raw")
 
-        if lat and lon:
+        if city_data:
+            if not isinstance(city_data, dict):
+                city_data = json.loads(city_data)
+
+            lon = city_data["lon"]
+            lat = city_data["lat"]
             weather_info = openWeatherApi.get_weather(lat=lat, lon=lon)
 
             city = City.objects.get_or_create(
-                city_name=weather_info.weather_raw["name"],
-                country_code=weather_info.weather_raw["sys"]["country"],
-                defaults={"lat": lat, "lon": lon},
+                city_name=city_data["city_name"],
+                lon=lon,
+                lat=lat,
+                country_code=city_data.get("country_code"),
+                state=city_data.get("state"),
             )[0]
             city_weather = CityWeather.objects.get_or_create(city=city)[0]
 
