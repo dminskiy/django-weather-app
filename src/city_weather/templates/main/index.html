@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -48,8 +49,7 @@
         <form id="weather-form" class="form-inline mt-2 mb-2">
             {% csrf_token %}
             <input type="text" id="location-input" class="form-control mr-2" placeholder="Start typing a location..." required>
-            <input type="hidden" id="location-lat" name="lat">
-            <input type="hidden" id="location-lon" name="lon">
+            <input type="hidden" id="city-raw" name="city_raw">
             <button type="submit" class="btn btn-primary" style="background-color: #7c73e6;">Add</button>
         </form>
       </nav>
@@ -61,7 +61,9 @@
         {% for city in cities %}       
             <div class="city" data-city-id="{{ city.id }}">
                 <h5>{{ city.city.city_name }}, {{ city.city.country_code }}</h5>
-                <hr class="solid">
+                {% if city.city.state %}
+                    <div>State: <strong>{{ city.city.state }}</strong></div>
+                {% endif %}                <hr class="solid">
                 <div>Temperature: <strong>{{ city.current_temperature_C }} C</strong></div>
                 <div>Condition: <strong>{{ city.current_condition }}</strong></div>
                 <div>Humidity: <strong>{{ city.humidity }}%</strong></div>
@@ -85,8 +87,7 @@
                             response($.map(data, function(item) {
                                 return {
                                     label: item.label,
-                                    lat: item.lat,
-                                    lon: item.lon
+                                    city_raw: JSON.stringify(item),
                                 };
                             }));
                         }
@@ -94,8 +95,7 @@
                 },
                 select: function(event, ui) {
                     $('#location-input').val(ui.item.label);
-                    $('#location-lat').val(ui.item.lat);
-                    $('#location-lon').val(ui.item.lon);
+                    $('#city-raw').val(ui.item.city_raw);
                     return false;
                 },
                 minLength: 2
@@ -107,32 +107,15 @@
                     url: '{% url "get_weather_and_update" %}',
                     type: 'POST',
                     data: {
-                        'lat': $('#location-lat').val(),
-                        'lon': $('#location-lon').val(),
+                        'city_raw': $('#city-raw').val(),
                         'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
                     },
                     success: function(data) {                        
                         if (data.error) {
                             alert('Failed to retrieve weather data. Please try again.');
                         } else {
-                            $('#cities-list').html('');
-                            data.cities.forEach(city => {
-                            // TODO: avoid second card declaration
-                            $('#cities-list').append(`
-                            <div class="city" data-city-id="${city.city.id}">
-                                <h5>${city.city.city_name}, ${city.city.country_code}</h5>
-                                <hr class="solid">
-                                <div>Temperature: <strong>${city.current_temperature_C} C</strong></div>
-                                <div>Condition: <strong>${city.current_condition}</strong></div>
-                                <div>Humidity: <strong>${city.humidity}%</strong></div>
-                                <div>Wind Speed: <strong>${city.wind_speed} m/s</strong></div>
-                                <div>Updated: <em>${ city.last_updated }</em></div>
-                                <button class="delete-button"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                                `);
-                            });
-
                             $('#location-input').val('')
+                            location.reload();
                         }
                     },
                     error: function(xhr, status, error) {
