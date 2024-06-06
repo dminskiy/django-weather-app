@@ -41,8 +41,11 @@ class TestCityWeatherView(TestCase):
             reverse("get_weather_and_update"),
             data=json.dumps(
                 {
-                    "lat": 48.8458,
-                    "lon": 2.3509,
+                    "city_raw": {
+                        "city_name": "Paris",
+                        "lat": 48.8458,
+                        "lon": 2.3509,
+                    }
                 }
             ),
             content_type="application/json",

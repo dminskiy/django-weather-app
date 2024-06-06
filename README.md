@@ -29,6 +29,7 @@ Manage the raw backend using an admin account (needs to be set on the server fro
 - Docker client needs to be installed and running
 - .env file in the same directory as the source code
    - sample file with the required params is available at `sample-env-file`
+   - Note, admin console CSS wouldn't work properly unless the app is in the DEBUG mode (set DJANGO_DEBUG=1 in .env), it has to do with serving static files in the production environment which I've not setup for the purposes of this exercise.
 
 ## Build Container & Access the app
 
@@ -69,8 +70,8 @@ There is a total of 9 tests as described below:
 # Future Work
 
 ## Technical Improvements
-- Frontend: refactor card construction/list management
-- Backend: improve the consistency of the naming
+- [FIXED] Frontend: refactor card construction/list management
+- [FIXED] Backend: improve the consistency of the naming
    - Currently, location coordinates & autocomplete names are fetched from geo-coding but the final location names used on cards are extracted from the weather API and are obtained via the cords.
    - This often results in slight discrepancies between "what was added" and "what is shown on the card"
    - Solutions: (i) reuse geo-coding names or (ii) have a consistent coord-location mapping
